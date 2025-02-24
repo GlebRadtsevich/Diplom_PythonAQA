@@ -3,7 +3,7 @@ import allure
 from pages.components.header import Header
 
 
-@allure.epic("Header Tests")
+@allure.epic("Тесты для Header")
 class TestHeader:
 
     @allure.title("Test: Проверка отображения хедера")

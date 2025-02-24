@@ -26,18 +26,18 @@ class HomePage(BasePage):
         self.url = f"{DOMAIN}/"
         self.title = TITLE
 
-    @allure.step('Open "Home" page')
+    @allure.step('Открытие страницы "Home"')
     def open_home_page(self):
         self.page.goto(self.url, timeout=10000)
 
-    @allure.step('Assert "Home" page is opened')
+    @allure.step('Проверка, что страница "Home" открыта')
     def assert_home_page_is_opened(self):
         assert self.page.locator(self.BANNER).is_visible(), "Banner not visible!"
         assert self.page.locator(
             self.BANNER_TITLE).inner_text() == self.BANNER_NAME, \
                 f"Expected banner text '{self.BANNER_NAME}', but got different text."
 
-    @allure.step('Assert that "Recent Reviews" block is displayed with correct text')
+    @allure.step('Проверка отображения блока "Recent Reviews" с правильным текстом')
     def assert_recent_reviews_displayed(self):
         reviews_block = self.page.locator(self.RECENT_REVIEWS)
         assert reviews_block.is_visible(), "Блок 'Recent Reviews' не отображается"
@@ -47,7 +47,7 @@ class HomePage(BasePage):
         assert actual_text == self.RECENT_REVIEWS_NAME, \
             f"Ожидаемый текст '{self.RECENT_REVIEWS_NAME}', но получен '{actual_text}'"
 
-    @allure.step('Click on "See our pricing" button')
+    @allure.step('Клик по кнопке "See our pricing"')
     def click_see_our_pricing(self):
         pricing_button = self.page.locator(self.SEE_OUR_PRICING_BUTTON)
         pricing_button.wait_for(state="visible", timeout=10000)  # Ждем появления кнопки
@@ -59,7 +59,7 @@ class HomePage(BasePage):
         current_url = self.page.url
         assert "shop" in current_url, f"Shop page did not open as expected. Current URL: {current_url}"
 
-    @allure.step('Search and filter products with query: {query}')
+    @allure.step('Поиск и фильтрация товаров по запросу: {query}')
     def search_and_filter(self, query):
         search_and_filter_btn = self.page.locator(self.SEARCH_AND_FILTER_BUTTON)
         search_and_filter_btn.wait_for(state="visible", timeout=10000)

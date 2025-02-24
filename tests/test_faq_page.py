@@ -3,7 +3,7 @@ import pytest
 from pages.faq_page import FAQPage
 
 
-@allure.epic("FAQ Page Tests")
+@allure.epic("Тесты для страницы FAQ")
 @pytest.mark.ui
 class TestFAQPage:
 

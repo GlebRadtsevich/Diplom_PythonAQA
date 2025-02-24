@@ -18,9 +18,9 @@ class ShopPage(BasePage):
     PRICE_MIN_FIELD = 'input[class*="min-price"]'
     PRICE_MAX_FIELD = 'input[class*="max-price"]'
     PRODUCT_CARD = '[class="store-products"]'
-    PRODUCT_TITLE = 'div[data-product-id="13799318"] h5'
-    PRODUCT_PRICE = "#store-products-13799318 .py-3 span span"
-    PRODUCT_SECTION = '[class="store-products"]'
+    PRODUCT_NAME = '.bb-font-h3'
+    PRODUCT_PRICE = '.bb-product-final-price'
+    FIRST_PRODUCT = '//*[@id="store-products-13799318"]//a'
     FEATURED_CHECKBOX = "#related-13799318-FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"
     ON_SALE_CHECKBOX = "#onSale-13799318"
     IN_STOCK_CHECKBOX = "#inStock-13799318"
@@ -29,6 +29,7 @@ class ShopPage(BasePage):
     SILICONE_CHECKBOX = "#related-13799318-73C7904F-E977-A380-9778-D53C11483404"
     IFRAME_SELECTOR = '[src="/shop/product/untitled-product-2?productQuickView=1"]'
     MODAL_ADD_TO_CART_BUTTON = ".btn btn-primary bb-store-add-product ml-0"
+    QUANTITY_SELECTOR = '[name="bb-product-qty"]'
 
     def __init__(self, page: Page):
         super().__init__(page)
@@ -94,3 +95,71 @@ class ShopPage(BasePage):
             checkbox.check()
         else:
             raise ValueError(f"Фильтр '{filter_name}' не найден")
+
+    @allure.step('Открытие страницы Shop')
+    def open_shop_page(self):
+        self.page.goto(self.url, timeout=10000)
+
+    @allure.step('Проверка, что страница Shop открыта')
+    def assert_shop_page_is_opened(self):
+        assert self.page.locator(self.METALLIC_CHECKBOX).is_visible(), "Фильтр Metallic не отображается на странице!"
+
+    @allure.step('Выбор фильтра Metallic')
+    def select_metallic_filter(self):
+        metallic_checkbox = self.page.locator(self.METALLIC_CHECKBOX)
+        metallic_checkbox.click()
+
+    @allure.step('Click on the first product')
+    def click_on_first_product(self):
+        first_product = self.page.locator("//*[@id='store-products-13799318']//a").nth(0)
+        first_product.click()
+
+    @allure.step('Проверка, что страница продукта открыта')
+    def assert_product_page_is_opened(self, expected_path):
+        current_url = self.page.url
+        assert expected_path in current_url, (f"Ожидаемый путь '{DOMAIN}/{expected_path}',"
+                                              f" но текущий путь: {current_url}")
+
+    @allure.step('Проверка названия продукта')
+    def assert_product_name(self, expected_title):
+        product_name = self.page.locator(self.PRODUCT_NAME).inner_text().strip()
+        assert product_name == expected_title, (f"Ожидаемое название: '{expected_title}',"
+                                                f" но получено: '{product_name}'")
+
+    @allure.step('Проверка цены продукта')
+    def assert_product_price(self, expected_price):
+        product_price = self.page.locator(self.PRODUCT_PRICE).inner_text().strip()
+        assert product_price == expected_price, (f"Ожидаемая цена: '{expected_price}',"
+                                                 f" но получена: '{product_price}'")
+
+    # Логика для работы с количеством товара и ценой
+    @allure.step('Установка начального количества товара')
+    def set_initial_quantity(self, quantity: int):
+        quantity_input = self.page.locator(self.QUANTITY_SELECTOR)
+        # Ждём, пока элемент станет доступным и видимым
+        # Подождем, пока элемент будет видимым
+        quantity_input.wait_for(state="visible", timeout=10000)  # Увеличиваем время ожидания до 10 секунд
+
+        try:
+            # Пробуем фокусировать элемент и заполнять его значением
+            quantity_input.focus()
+            quantity_input.fill(str(quantity))
+            self.page.locator('body').click()# Вводим начальное количество товара
+        except TimeoutError:
+            print("Ошибка: элемент не найден или не видим в течение времени ожидания.")
+            raise
+
+    @allure.step('Проверка начального значения счётчика товара')
+    def assert_initial_quantity(self, expected_quantity: int):
+        quantity_locator = self.page.locator(self.QUANTITY_SELECTOR)  # Получаем локатор для поля ввода
+        quantity_locator.wait_for(timeout=10000)  # Ждем, пока элемент станет доступным для взаимодействия
+
+        quantity = quantity_locator.input_value()  # Получаем значение из поля
+        assert int(quantity) == expected_quantity, (f"Ожидалось количество {expected_quantity},"
+                                                    f" но найдено {quantity}")
+
+    @allure.step('Проверка изменения цены')
+    def assert_price_changes(self, expected_price: float):
+        price = self.page.locator(self.PRODUCT_PRICE).inner_text().strip().replace('$', '')
+        assert float(price) == expected_price, (f"Ожидаемая цена {expected_price},"
+                                                f" но найдена {price}")

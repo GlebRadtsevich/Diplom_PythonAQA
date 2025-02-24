@@ -4,7 +4,7 @@ from pages.home_page import HomePage
 from data.test_data import products
 
 
-@allure.epic("Home Page Tests")
+@allure.epic("Тесты для Home Page")
 @pytest.mark.functional
 class TestHomePage:
 

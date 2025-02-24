@@ -1,10 +1,11 @@
 import allure
 import pytest
+
 from pages.shop_page import ShopPage
 from data.test_data import products
 
 
-@allure.epic("Shop Page Tests")
+@allure.epic("Тесты Shop Page")
 @pytest.mark.ui
 class TestShopPage:
 
@@ -79,3 +80,24 @@ class TestShopPage:
         magsafe_results = page.locator('[class="store-products"]')
         assert magsafe_results.count() > 0, "Не найдено отмеченных как 'MagSafe' товаров"
 
+    @allure.title("Test: Переход на страницу продукта 'Metallic'")
+    def test_shop_page_filter_and_product(self, page):
+        shop_page = ShopPage(page)
+        shop_page.open_shop_page()
+        shop_page.assert_shop_page_is_opened()
+        shop_page.select_metallic_filter()
+        shop_page.click_on_first_product()
+        shop_page.assert_product_page_is_opened(products[0]['path'])
+        shop_page.assert_product_name(products[0]['title'])
+        shop_page.assert_product_price(products[0]['price'])
+
+    @allure.title("Test: Проверка фильтра и изменения количества товара и цены")
+    def test_shop_page_filter_and_product(self, page):
+        shop_page = ShopPage(page)
+        shop_page.open_shop_page()
+        shop_page.assert_shop_page_is_opened()
+        shop_page.select_metallic_filter()
+        shop_page.click_on_first_product()
+        shop_page.set_initial_quantity(3)
+        shop_page.assert_initial_quantity(3)
+        shop_page.assert_price_changes(77.97) # Начальное количество товара — 3
