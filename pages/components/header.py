@@ -5,16 +5,16 @@ from data import DOMAIN
 
 
 class Header:
-    HEADER_CONTAINER = '#bb-header'  # Основной блок хедера
+    HEADER_CONTAINER = '#bb-header'
     LOGO = '#bb-header-spacing .bb-site-logo img'
     SHOP_LINK = '[href="/shop"]'
     CONTACT_LINK = '[href="/contact"]'
     ABOUT_LINK = '[href="/about"]'
     FAQ_LINK = '[href="/faq"]'
     CART_ICON = '[aria-label="Open Cart"]'
-    CART_SIDEBAR = '[class="bb-cart-dialog bb-color-0 pb-5 px-3 px-md-0"]'  # Класс корзины
-    CLOSE_CART_BUTTON = 'aria-label="Close Sidebar"'  # Кнопка закрытия корзины
-    CART_ITEM_TITLE = 'class="mb-1 d-block bb-cart-product-name"'  # Название товара в корзине
+    CART_SIDEBAR = '[class="bb-cart-dialog bb-color-0 pb-5 px-3 px-md-0"]'
+    CLOSE_CART_BUTTON = 'aria-label="Close Sidebar"'
+    CART_ITEM_TITLE = 'class="mb-1 d-block bb-cart-product-name"'
 
 
     def __init__(self, page: Page, url=f"{DOMAIN}/"):
@@ -24,13 +24,11 @@ class Header:
 
     @allure.step("Открытие страницы и ожидание полной загрузки")
     def open_page(self):
-        """Открывает главную страницу и ждет полной загрузки"""
         self.page.goto(self.url, timeout=30000, wait_until="networkidle")
         self.wait_for_page_load()
 
     @allure.step("Ожидание полной загрузки страницы")
     def wait_for_page_load(self):
-        """Ожидает полной загрузки страницы"""
         self.page.wait_for_load_state("networkidle")
 
     @allure.step("Проверка отображения хедера")
@@ -68,28 +66,21 @@ class Header:
 
     @allure.step("Открытие sidebar корзины через проверку видимости")
     def open_cart_sidebar(self):
-        """Открывает корзину и проверяет её видимость через is_visible()"""
         cart_icon = self.page.locator(self.CART_ICON)
         cart_icon.wait_for(state="visible", timeout=10000)
         cart_icon.click()
-
-        # Ждем появления корзины
         cart_sidebar = self.page.locator(self.CART_SIDEBAR)
         cart_sidebar.wait_for(state="visible", timeout=15000)
-
-        # Проверяем, что корзина видна
         assert cart_sidebar.is_visible(), "Sidebar корзины не открылся"
 
     @allure.step("Закрытие sidebar корзины через проверку видимости")
     def close_cart_sidebar(self):
-        """Закрывает корзину и проверяет её отсутствие через is_hidden()"""
         cart_icon = self.page.locator(self.CART_ICON)
         cart_icon.wait_for(state="visible", timeout=10000)
         cart_icon.click(force=True)
 
     @allure.step("Проверка наличия товара в корзине: {product_title}")
     def assert_product_in_cart(self, product_title):
-        """Проверяет наличие товара в корзине"""
         cart_item = self.page.locator(f"{self.CART_ITEM_TITLE} >> text={product_title}")
         cart_item.wait_for(state="visible", timeout=10000)
         assert cart_item.is_visible(), f"Товар '{product_title}' не найден в корзине"

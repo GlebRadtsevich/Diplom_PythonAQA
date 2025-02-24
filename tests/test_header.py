@@ -44,11 +44,7 @@ class TestHeader:
     @allure.title("Test: Проверка закрытия sidebar корзины")
     def test_cart_sidebar(self, page):
         header = Header(page)
-
-        # Проверяем отображение иконки корзины
         header.assert_cart_icon()
-
-        # Открываем и затем закрываем sidebar корзины
         header.open_cart_sidebar()
         header.close_cart_sidebar()
 
