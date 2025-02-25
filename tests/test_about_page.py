@@ -1,10 +1,8 @@
 import allure
-import pytest
 from pages.about_page import AboutPage
 
 
 @allure.epic("Тесты для страницы About Us")
-@pytest.mark.ui
 class TestAboutPage:
 
     @allure.title("Test: Открытие страницы 'About Us'")
@@ -30,11 +28,13 @@ class TestAboutPage:
         about_page = AboutPage(page)
         about_page.open_about_page()
         about_page.click_contact_us()
-        assert "contact" in page.url, f"Ожидалось открытие контактной страницы, но текущий URL: {page.url}"
+        assert "contact" in page.url, (f"Ожидалось открытие контактной"
+                                       f" страницы, но текущий URL: {page.url}")
 
     @allure.title("Test: Клик по кнопке 'Shop Now'")
     def test_click_shop_now_button(self, page):
         about_page = AboutPage(page)
         about_page.open_about_page()
         about_page.click_shop_now()
-        assert "shop" in page.url, f"Ожидалось открытие страницы магазина, но текущий URL: {page.url}"
+        assert "shop" in page.url, (f"Ожидалось открытие страницы магазина,"
+                                    f" но текущий URL: {page.url}")

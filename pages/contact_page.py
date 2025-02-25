@@ -30,8 +30,12 @@ class ContactPage:
 
     @allure.step('Проверка, что страница "CONTACT" открыта')
     def assert_page_is_displayed(self):
-        assert self.page.title() == self.title, f"Ожидаемый title: {self.title}, но найден {self.page.title()}"
-        assert self.page.url == self.url, f"Ожидаемый URL: {self.url}, но найден {self.page.url}"
+        assert self.page.title() == self.title, f"Ожидаемый title: {
+            self.title}, но найден {
+            self.page.title()}"
+        assert self.page.url == self.url, f"Ожидаемый URL: {
+            self.url}, но найден {
+            self.page.url}"
         self.assert_element_is_visible(self.CONTACT_US_BANNER)
         self.assert_banner_title("Contact Us ")
 
@@ -49,10 +53,12 @@ class ContactPage:
     @allure.step('Проверка видимости элемента')
     def assert_element_is_visible(self, selector: str):
         element = self.page.locator(selector)
-        assert element.is_visible(), f"Элемент с селектором {selector} не виден на странице"
+        assert element.is_visible(
+        ), f"Элемент с селектором {selector} не виден на странице"
 
     @allure.step('Проверка заголовка баннера')
     def assert_banner_title(self, expected_title: str):
-        banner_title = self.page.locator(self.CONTACT_US_BANNER).inner_text().strip()
+        banner_title = self.page.locator(
+            self.CONTACT_US_BANNER).inner_text().strip()
         expected_title = expected_title.strip()
         assert banner_title == expected_title, f"Ожидаемый текст баннера: '{expected_title}', но найден: '{banner_title}'"

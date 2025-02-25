@@ -11,7 +11,6 @@ class AboutPage(BasePage):
     WELCOME_SECTION = '//*[@id="bb-section-60F4A7BE-4C8D-470A-8374-C7E269E614CB"]'
     WHY_US_SECTION = "#bb-section-71D5E765-AB5D-450C-B1F2-00C8EA490010"
 
-
     def __init__(self, page: Page):
         super().__init__(page)
         self.url = f"{DOMAIN}/about"
@@ -23,7 +22,8 @@ class AboutPage(BasePage):
 
     @allure.step('Assert "About Us" banner is visible')
     def assert_about_us_banner(self):
-        assert self.page.locator(self.ABOUT_US_BANNER).is_visible(), "Banner 'About Us' is not visible"
+        assert self.page.locator(
+            self.ABOUT_US_BANNER).is_visible(), "Banner 'About Us' is not visible"
 
     @allure.step('Click on "Contact Us" button')
     def click_contact_us(self):
@@ -39,7 +39,8 @@ class AboutPage(BasePage):
 
     @allure.step('Assert "Welcome" section is visible')
     def assert_welcome_section(self):
-        assert self.page.locator(self.WELCOME_SECTION).is_visible(), "Welcome section is not visible"
+        assert self.page.locator(
+            self.WELCOME_SECTION).is_visible(), "Welcome section is not visible"
 
     @allure.step('Assert "Why Us" section is visible')
     def assert_why_us_section(self):

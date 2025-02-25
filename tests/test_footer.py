@@ -2,12 +2,13 @@ import allure
 import pytest
 from pages.components.footer import Footer
 
+
 @pytest.fixture
 def footer(page):
     return Footer(page)
 
+
 @allure.epic("Тесты для Footer")
-@pytest.mark.ui
 class TestFooter:
 
     @allure.title("Test: Проверка отображения футера")

@@ -16,7 +16,6 @@ class Header:
     CLOSE_CART_BUTTON = 'aria-label="Close Sidebar"'
     CART_ITEM_TITLE = 'class="mb-1 d-block bb-cart-product-name"'
 
-
     def __init__(self, page: Page, url=f"{DOMAIN}/"):
         self.page = page
         self.url = url
@@ -33,11 +32,13 @@ class Header:
 
     @allure.step("Проверка отображения хедера")
     def assert_header_visible(self):
-        assert self.page.locator(self.HEADER_CONTAINER).is_visible(), "Header не отображается"
+        assert self.page.locator(
+            self.HEADER_CONTAINER).is_visible(), "Header не отображается"
 
     @allure.step("Проверка отображения логотипа")
     def assert_logo_visible(self):
-        assert self.page.locator(self.LOGO).is_visible(), "Логотип не отображается"
+        assert self.page.locator(
+            self.LOGO).is_visible(), "Логотип не отображается"
 
     @allure.step("Проверка наличия ссылки Shop в header")
     def assert_shop_link(self):
@@ -81,6 +82,8 @@ class Header:
 
     @allure.step("Проверка наличия товара в корзине: {product_title}")
     def assert_product_in_cart(self, product_title):
-        cart_item = self.page.locator(f"{self.CART_ITEM_TITLE} >> text={product_title}")
+        cart_item = self.page.locator(
+            f"{self.CART_ITEM_TITLE} >> text={product_title}")
         cart_item.wait_for(state="visible", timeout=10000)
-        assert cart_item.is_visible(), f"Товар '{product_title}' не найден в корзине"
+        assert cart_item.is_visible(
+        ), f"Товар '{product_title}' не найден в корзине"

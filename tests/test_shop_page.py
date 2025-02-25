@@ -6,7 +6,6 @@ from data.test_data import products
 
 
 @allure.epic("Тесты Shop Page")
-@pytest.mark.ui
 class TestShopPage:
 
     @allure.title("Test: Открытие страницы Shop и проверка заголовка")
@@ -30,7 +29,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.filter_by_price(20, 26)
         filtered_results = page.locator('[class="store-products"]')
-        assert filtered_results.count() > 0, "Не найдено товаров в указанном диапазоне цен"
+        assert filtered_results.count() > 0, "Не найдено товаров в диапазоне цен"
 
     @allure.title("Test: Применение чекбокса 'Featured'")
     def test_apply_featured_filter(self, page):
@@ -38,7 +37,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.apply_checkbox_filter("featured")
         featured_results = page.locator('[class="store-products"]')
-        assert featured_results.count() > 0, "Не найдено отмеченных как 'Featured' товаров"
+        assert featured_results.count() > 0, "Не найдено 'Featured' товаров"
 
     @allure.title("Test: Применение чекбокса 'On Sale'")
     def test_apply_onsale_filter(self, page):
@@ -46,7 +45,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.apply_checkbox_filter("on_sale")
         on_sale_results = page.locator('[class="store-products"]')
-        assert on_sale_results.count() > 0, "Не найдено отмеченных как 'On_sale' товаров"
+        assert on_sale_results.count() > 0, "Не найдено 'On_sale' товаров"
 
     @allure.title("Test: Применение чекбокса 'In Stock'")
     def test_apply_instock_filter(self, page):
@@ -54,7 +53,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.apply_checkbox_filter("in_stock")
         in_stock_results = page.locator('[class="store-products"]')
-        assert in_stock_results.count() > 0, "Не найдено отмеченных как 'in_stock' товаров"
+        assert in_stock_results.count() > 0, "Не найдено 'in_stock' товаров"
 
     @allure.title("Test: Применение чекбокса 'Metallic'")
     def test_apply_metallic_filter(self, page):
@@ -62,7 +61,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.apply_checkbox_filter("metallic")
         metallic_results = page.locator('[class="store-products"]')
-        assert metallic_results.count() > 0, "Не найдено отмеченных как 'Metallic' товаров"
+        assert metallic_results.count() > 0, "Не найдено 'Metallic' товаров"
 
     @allure.title("Test: Применение чекбокса 'Silicone'")
     def test_apply_silicone_filter(self, page):
@@ -70,7 +69,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.apply_checkbox_filter("silicone")
         silicone_results = page.locator('[class="store-products"]')
-        assert silicone_results.count() > 0, "Не найдено отмеченных как 'Silicone' товаров"
+        assert silicone_results.count() > 0, "Не найдено 'Silicone' товаров"
 
     @allure.title("Test: Применение чекбокса 'MagSafe'")
     def test_apply_magsafe_filter(self, page):
@@ -78,7 +77,7 @@ class TestShopPage:
         shop_page.open_shop_page()
         shop_page.apply_checkbox_filter("magsafe")
         magsafe_results = page.locator('[class="store-products"]')
-        assert magsafe_results.count() > 0, "Не найдено отмеченных как 'MagSafe' товаров"
+        assert magsafe_results.count() > 0, "Не найдено 'MagSafe' товаров"
 
     @allure.title("Test: Переход на страницу продукта 'Metallic'")
     def test_shop_page_filter_and_product(self, page):
@@ -91,8 +90,8 @@ class TestShopPage:
         shop_page.assert_product_name(products[0]['title'])
         shop_page.assert_product_price(products[0]['price'])
 
-    @allure.title("Test: Проверка фильтра и изменения количества товара и цены")
-    def test_shop_page_filter_and_product(self, page):
+    @allure.title("Test: Проверка изменения количества товара и цены")
+    def test_shop_page_price(self, page):
         shop_page = ShopPage(page)
         shop_page.open_shop_page()
         shop_page.assert_shop_page_is_opened()
@@ -100,4 +99,4 @@ class TestShopPage:
         shop_page.click_on_first_product()
         shop_page.set_initial_quantity(3)
         shop_page.assert_initial_quantity(3)
-        shop_page.assert_price_changes(77.97) # Начальное количество товара — 3
+        shop_page.assert_price_changes(77.97)

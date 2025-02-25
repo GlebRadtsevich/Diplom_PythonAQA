@@ -47,4 +47,3 @@ class TestHeader:
         header.assert_cart_icon()
         header.open_cart_sidebar()
         header.close_cart_sidebar()
-

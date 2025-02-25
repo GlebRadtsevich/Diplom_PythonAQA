@@ -5,7 +5,6 @@ from data.test_data import products
 
 
 @allure.epic("Тесты для Home Page")
-@pytest.mark.functional
 class TestHomePage:
 
     @allure.title("Test: Проверка открытия главной страницы")
@@ -20,14 +19,14 @@ class TestHomePage:
         home_page.open_home_page()
         home_page.assert_recent_reviews_displayed()
 
-    @allure.title("Test: Проверка перехода на страницу Shop через кнопку 'See our pricing'")
+    @allure.title("Test: Проверка перехода на страницу Shop")
     def test_see_our_pricing_redirects_to_shop(self, page):
         home_page = HomePage(page)
         home_page.open_home_page()
         home_page.click_see_our_pricing()
         home_page.assert_see_our_pricing()
 
-    @allure.title("Test: Поиск продукта по части названия и проверка результатов")
+    @allure.title("Test: Поиск продукта по части названия")
     @pytest.mark.parametrize("product", products[:2])
     def test_search_and_filter_product(self, page, product):
         home_page = HomePage(page)
@@ -36,14 +35,16 @@ class TestHomePage:
         home_page.search_and_filter(query)
         search_result_title = page.locator(f'text="{product["title"]}"')
         search_result_title.wait_for(state="visible", timeout=5000)
-        assert search_result_title.is_visible(), f'Product title "{product["title"]}" not found in search results'
+        assert search_result_title.is_visible(), (f'Product title "{
+            product["title"]}"' f' not found in search results')
         search_result_price = page.locator(f'text="{product["price"]}"')
         search_result_price.wait_for(state="visible", timeout=5000)
-        assert search_result_price.is_visible(), f'Product price "{product["price"]}" not found in search results'
+        assert search_result_price.is_visible(), (f'Product price "{
+            product["price"]}"' f' not found in search results')
         search_result_link = page.locator(f'a[href*="{product["path"]}"]')
         search_result_link.wait_for(state="visible", timeout=5000)
-        assert search_result_link.is_visible(), (f'Product link containing "{product["path"]}"'
-                                                 f' not found in search results')
+        assert search_result_link.is_visible(), (f'Product link containing "{
+            product["path"]}"' f' not found in search results')
 
     @allure.title("Test: Проверка отображения хедера и футера на главной странице")
     def test_header_and_footer_visible(self, page):

@@ -2,6 +2,7 @@ from playwright.sync_api import Page, Locator
 from pages.components.header import Header
 from pages.components.footer import Footer
 
+
 class BasePage:
 
     def __init__(self, page: Page):
@@ -33,9 +34,11 @@ class BasePage:
         except Exception as e:
             error_message = str(e)
             if "Timeout" in error_message:
-                raise TimeoutError(f"Элемент с селектором '{selector}' не стал видимым за {timeout} мс.")
+                raise TimeoutError(
+                    f"Элемент с селектором '{selector}' не стал видимым за {timeout} мс.")
             else:
-                raise RuntimeError(f"Ошибка Playwright при проверке видимости элемента '{selector}': {error_message}")
+                raise RuntimeError(
+                    f"Ошибка Playwright при проверке видимости элемента '{selector}': {error_message}")
 
     def get_text(self, selector: str) -> str:
         return self.page.inner_text(selector)

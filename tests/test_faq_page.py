@@ -1,10 +1,8 @@
 import allure
-import pytest
 from pages.faq_page import FAQPage
 
 
 @allure.epic("Тесты для страницы FAQ")
-@pytest.mark.ui
 class TestFAQPage:
 
     @allure.title("Test: Проверка всех видимых разделов на странице FAQ")

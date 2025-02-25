@@ -1,10 +1,8 @@
 import allure
-import pytest
 from pages.contact_page import ContactPage
 
 
 @allure.epic("Тесты для страницы Contact")
-@pytest.mark.ui
 class TestContactPage:
 
     @allure.title("Test: Открытие страницы 'Contact Us'")

@@ -1,7 +1,7 @@
 import os
 import pytest
 from playwright.sync_api import sync_playwright
-# from data import CustomerDB
+from data import CustomerDB
 
 
 @pytest.fixture(scope="session")
@@ -16,6 +16,7 @@ def browser():
         yield browser
         browser.close()
 
+
 @pytest.fixture(scope="function")
 def page(browser):
     context = browser.new_context()
@@ -24,9 +25,12 @@ def page(browser):
     yield page
     context.close()
 
-# @pytest.fixture(autouse=True, scope="function")
-# def customer_db():
-#     customer_db = CustomerDB()
-#     customer_data = customer_db.get_customer_from_db()
-#     yield customer_data
-#     customer_db.close()
+
+@pytest.fixture(scope="function")
+def customers_db():
+    db = CustomerDB(db_path="data/customers.db")
+    customer_data = db.get_customer_from_db()
+    if not customer_data:
+        pytest.fail("Не удалось получить данные клиента из базы данных.")
+
+    return customer_data

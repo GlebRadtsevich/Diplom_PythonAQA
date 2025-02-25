@@ -18,4 +18,3 @@ products = [
         "path": "shop/product/case-with-magsafe-for-iphone-13",
     },
 ]
-
