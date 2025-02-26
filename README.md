@@ -91,7 +91,36 @@ HEADLESS=true python -m pytest # запуск в headless-режиме
     ```bash
     allure serve allure-results
     ```
+---
 
+## Интеграция с Docker
+
+Для удобного запуска тестов в изолированных средах проект включает `docker-compose.yml` и `Dockerfile`. Эти конфигурации позволяют запускать различные группы тестов (API, функциональные, UI) внутри контейнеров Docker.
+
+### Запуск тестов с `docker-compose.yml`:
+
+```bash
+docker-compose up               # Запуск всех тестов в параллельном режиме
+docker-compose down             # Остановка и удаление контейнеров
+```
+
+### Запуск тестов с `Dockerfile`:
+
+```bash
+docker build -t <имя образа> .      # Создание docker-образа
+docker run --rm <имя образа>        # Запуск контейнера с docker-образом и его удаление после выполнения
+```
+
+### Запуск Allure-отчетов в Docker:
+Если надо посмотреть отчёт Allure после тестов:
+
+```bash
+docker-compose up allure-server       # Запуск контейнера с docker-образом и его удаление после выполнения
+```
+
+Затем надо открыть браузер и зайти на http://localhost:5050
+
+Примечание: тесты в Docker выполняются в headless-режиме.
 ---
 
 ## Структура проекта
