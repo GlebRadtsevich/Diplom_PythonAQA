@@ -3,7 +3,7 @@ import os
 
 
 class CustomerDB:
-    def __init__(self, db_path="customers.db"):
+    def __init__(self, db_path="data/customers.db"):
         self.db_path = os.path.abspath(db_path)
         self.connection = None
 
