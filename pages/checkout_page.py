@@ -28,9 +28,7 @@ class CheckoutPage:
 
     @allure.step("Проверка заголовка страницы Checkout")
     def assert_checkout_page_is_opened(self):
-        assert self.page.title() == self.title, f"Ожидался заголовок '{
-            self.title}', но получен '{
-            self.page.title()}'"
+        assert self.page.title() == self.title, f"Ожидался заголовок '{self.title}', но получен '{self.page.title()}'"
 
     @allure.step("Заполнение формы с данными покупателя")
     def fill_checkout_form(self):

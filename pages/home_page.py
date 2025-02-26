@@ -34,8 +34,7 @@ class HomePage(BasePage):
         assert self.page.locator(
             self.BANNER).is_visible(), "Banner not visible!"
         assert self.page.locator(
-            self.BANNER_TITLE).inner_text() == self.BANNER_NAME, \
-            f"Expected banner text '{self.BANNER_NAME}', but got different text."
+            self.BANNER_TITLE).inner_text() == self.BANNER_NAME, f"Ожидался текст '{self.BANNER_NAME}'."
 
     @allure.step('Проверка отображения блока "Recent Reviews" с правильным текстом')
     def assert_recent_reviews_displayed(self):

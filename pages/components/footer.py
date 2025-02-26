@@ -44,8 +44,7 @@ class Footer:
     def assert_address(self):
         address = self.page.locator(self.ADDRESS)
         address_text = address.inner_text()
-        assert address_text == self.address_text, f"Ожидался текст адреса '{
-            self.address_text}', но найден '{address_text}'"
+        assert address_text == self.address_text, f"Ожидался текст '{self.address_text}', но найден '{address_text}'"
 
     @allure.step("Проверка отображения email в футере")
     def assert_email(self):

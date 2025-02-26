@@ -30,9 +30,7 @@ class ContactPage:
 
     @allure.step('Проверка, что страница "CONTACT" открыта')
     def assert_page_is_displayed(self):
-        assert self.page.title() == self.title, f"Ожидаемый title: {
-            self.title}, но найден {
-            self.page.title()}"
+        assert self.page.title() == self.title, f"Ожидаемый title: {self.title}, но найден {self.page.title()}"
         assert self.page.url == self.url, f"Ожидаемый URL: {
             self.url}, но найден {
             self.page.url}"

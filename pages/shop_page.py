@@ -76,9 +76,7 @@ class ShopPage(BasePage):
             if product["title"] in card_text and product["price"] in card_text:
                 found = True
                 break
-        assert found, (f'Продукт с названием "{
-            product["title"]}" и ценой "{
-            product["price"]}" ' f'не найден на странице.')
+        assert found, f'Продукт с названием "{product["title"]}" и ценой "{product["price"]}" не найден'
 
     @allure.step('Отметить фильтр: {filter_name}')
     def apply_checkbox_filter(self, filter_name):
