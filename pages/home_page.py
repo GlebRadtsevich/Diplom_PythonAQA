@@ -32,8 +32,7 @@ class HomePage(BasePage):
     @allure.step('Проверка, что страница "Home" открыта')
     def assert_home_page_is_opened(self):
         assert self.page.locator(self.BANNER).is_visible(), "Banner not visible!"
-        assert self.page.locator(
-            self.BANNER_TITLE).inner_text() == self.BANNER_NAME, f"Ожидался текст '{self.BANNER_NAME}'."
+        assert self.page.locator(self.BANNER_TITLE).inner_text() == self.BANNER_NAME, f"Ожидался текст '{self.BANNER_NAME}'."
 
     @allure.step('Проверка отображения блока "Recent Reviews" с правильным текстом')
     def assert_recent_reviews_displayed(self):
@@ -42,8 +41,7 @@ class HomePage(BasePage):
         reviews_title = self.page.locator(self.RECENT_REVIEWS_TITLE)
         reviews_title.wait_for(timeout=10000)
         actual_text = reviews_title.inner_text().strip()
-        assert actual_text == self.RECENT_REVIEWS_NAME, f"Ожидаемый текст '{
-            self.RECENT_REVIEWS_NAME}', но получен '{actual_text}'"
+        assert actual_text == self.RECENT_REVIEWS_NAME, f"Ожидаемый текст '{self.RECENT_REVIEWS_NAME}', но получен '{actual_text}'"
 
     @allure.step('Клик по кнопке "See our pricing"')
     def click_see_our_pricing(self):
@@ -61,8 +59,7 @@ class HomePage(BasePage):
 
     @allure.step('Поиск и фильтрация товаров по запросу: {query}')
     def search_and_filter(self, query):
-        search_and_filter_btn = self.page.locator(
-            self.SEARCH_AND_FILTER_BUTTON)
+        search_and_filter_btn = self.page.locator(self.SEARCH_AND_FILTER_BUTTON)
         search_and_filter_btn.wait_for(state="visible", timeout=10000)
         search_and_filter_btn.click()
         search_input = self.page.locator(self.SEARCH_INPUT)
