@@ -31,8 +31,7 @@ class HomePage(BasePage):
 
     @allure.step('Проверка, что страница "Home" открыта')
     def assert_home_page_is_opened(self):
-        assert self.page.locator(
-            self.BANNER).is_visible(), "Banner not visible!"
+        assert self.page.locator(self.BANNER).is_visible(), "Banner not visible!"
         assert self.page.locator(
             self.BANNER_TITLE).inner_text() == self.BANNER_NAME, f"Ожидался текст '{self.BANNER_NAME}'."
 

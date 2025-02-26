@@ -55,8 +55,7 @@ class CheckoutPage:
             dropdown.click()
             dropdown.select_option(label=value)
         else:
-            raise Exception(
-                f"Dropdown for state '{value}' is not visible or enabled.")
+            raise Exception(f"Dropdown for state '{value}' is not visible or enabled.")
 
     @allure.step("Переход к следующему шагу")
     def click_continue(self):
@@ -86,30 +85,21 @@ class CheckoutPage:
         country_value = self.customer_data["country"]
         dropdown = self.page.locator(self.COUNTRY_SELECTOR)
         dropdown.click()
-        self.page.wait_for_function(
-            f"() => document.querySelectorAll('{
-                self.COUNTRY_SELECTOR} option').length > 1",
-            timeout=15000)
+        self.page.wait_for_function(f"() => document.querySelectorAll('{self.COUNTRY_SELECTOR} option').length > 1",timeout=15000)
         options = dropdown.locator("option").all_inner_texts()
         print("Available country options:", options)
         if country_value in options:
             dropdown.select_option(label=country_value)
         else:
-            raise Exception(
-                f"Country '{country_value}' not found in dropdown options.")
+            raise Exception(f"Country '{country_value}' not found in dropdown options.")
 
     @allure.step("Выбор штата")
     def select_state(self):
         state_value = self.customer_data["state"]
         dropdown = self.page.locator(self.STATE_SELECTOR)
-        self.page.wait_for_function(
-            f"() => document.querySelectorAll('{
-                self.STATE_SELECTOR} option').length > 1",
-            timeout=15000)
-        options_values = dropdown.locator("option").evaluate_all(
-            "elements => elements.map(el => el.value)")
+        self.page.wait_for_function(f"() => document.querySelectorAll('{self.STATE_SELECTOR} option').length > 1",timeout=15000)
+        options_values = dropdown.locator("option").evaluate_all("elements => elements.map(el => el.value)")
         if state_value in options_values:
             dropdown.select_option(value=state_value)
         else:
-            raise Exception(
-                f"State '{state_value}' is not available in the dropdown options. Available values: {options_values}")
+            raise Exception(f"State '{state_value}' is not available in the dropdown options. Available values: {options_values}")

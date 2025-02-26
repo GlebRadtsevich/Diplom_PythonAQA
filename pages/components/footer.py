@@ -36,8 +36,7 @@ class Footer:
     @allure.step("Проверка отображения логотипа в футере")
     def assert_logo_visible(self):
         logo_locator = self.page.locator(self.LOGO)
-        logo_locator.wait_for(state="visible",
-                              timeout=10000)  # Ждем появления логотипа
+        logo_locator.wait_for(state="visible",timeout=10000)  # Ждем появления логотипа
         assert logo_locator.is_visible(), "Логотип не отображается"
 
     @allure.step("Проверка отображения адреса в футере")
@@ -50,12 +49,10 @@ class Footer:
     def assert_email(self):
         email = self.page.locator(self.EMAIL)
         email_text = email.inner_text()
-        assert email_text == self.email_text, f"Ожидался текст email '{
-            self.email_text}', но найден '{email_text}'"
+        assert email_text == self.email_text, f"Ожидался текст email '{self.email_text}', но найден '{email_text}'"
 
     @allure.step("Проверка отображения сообщения в футере")
     def assert_message(self):
         message = self.page.locator(self.MESSAGE)
         message_text = message.inner_text()
-        assert message_text == self.message_text, f"Ожидался текст сообщения '{
-            self.message_text}', но найден '{message_text}'"
+        assert message_text == self.message_text, f"Ожидался текст '{self.message_text}', но найден '{message_text}'"

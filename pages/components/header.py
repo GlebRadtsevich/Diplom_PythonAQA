@@ -85,5 +85,4 @@ class Header:
         cart_item = self.page.locator(
             f"{self.CART_ITEM_TITLE} >> text={product_title}")
         cart_item.wait_for(state="visible", timeout=10000)
-        assert cart_item.is_visible(
-        ), f"Товар '{product_title}' не найден в корзине"
+        assert cart_item.is_visible(), f"Товар '{product_title}' не найден в корзине"
