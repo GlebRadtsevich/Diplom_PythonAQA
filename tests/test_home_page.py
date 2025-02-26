@@ -35,16 +35,13 @@ class TestHomePage:
         home_page.search_and_filter(query)
         search_result_title = page.locator(f'text="{product["title"]}"')
         search_result_title.wait_for(state="visible", timeout=5000)
-        assert search_result_title.is_visible(), (f'Product title "{
-            product["title"]}"' f' not found in search results')
+        assert search_result_title.is_visible(), f'Product title "{product["title"]}" not found in search results'
         search_result_price = page.locator(f'text="{product["price"]}"')
         search_result_price.wait_for(state="visible", timeout=5000)
-        assert search_result_price.is_visible(), (f'Product price "{
-            product["price"]}"' f' not found in search results')
+        assert search_result_price.is_visible(), f'Product price "{product["price"]}" not found in search results'
         search_result_link = page.locator(f'a[href*="{product["path"]}"]')
         search_result_link.wait_for(state="visible", timeout=5000)
-        assert search_result_link.is_visible(), (f'Product link containing "{
-            product["path"]}"' f' not found in search results')
+        assert search_result_link.is_visible(), f'Product link containing "{product["path"]}" not found in search results'
 
     @allure.title("Test: Проверка отображения хедера и футера на главной странице")
     def test_header_and_footer_visible(self, page):
