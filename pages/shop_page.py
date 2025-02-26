@@ -1,6 +1,7 @@
 import allure
 from playwright.sync_api import Page
 from core.base import BasePage
+from pages.checkout_page import CheckoutPage
 from data import DOMAIN, TITLE
 
 
@@ -10,6 +11,7 @@ class ShopPage(BasePage):
     ADD_TO_CART_BUTTON = '#bb-section-6BBAE845-B4CE-4B10-B447-D3C619E83D32 button[type="submit"]'
     SEARCH_FIELD = 'input[name="search"][type="text"]'
     SEARCH_BUTTON = '[class="append search-btn"]'
+    CART_BUTTON = '[aria-label="Open Cart"]'
     CHECKOUT_BUTTON = '.bb-cart-dialog button.bb-cart-checkout-btn'
     PRICE_MIN_FIELD = 'input[class*="min-price"]'
     PRICE_MAX_FIELD = 'input[class*="max-price"]'
@@ -24,11 +26,16 @@ class ShopPage(BasePage):
     WITH_MAGSAFE_CHECKBOX = "#related-13799318-63964004-E7A2-3A5F-3DDA-D599D4021CB9"
     SILICONE_CHECKBOX = "#related-13799318-73C7904F-E977-A380-9778-D53C11483404"
     QUANTITY_SELECTOR = '[name="bb-product-qty"]'
+    EMPTY_CART_TEXT = "div.bb-cart-body h5"  # Замените на реальный локатор
+    CONTINUE_SHOPPING_BUTTON = "div.bb-cart-body button"
+    CART_ITEMS_SELECTOR = '[class="bb-cart-line d-flex justify-content-between mb-5"]'
+    DROPDOWN = '[class="sm-cart-qty"]'
 
     def __init__(self, page: Page):
         super().__init__(page)
         self.url = f"{DOMAIN}/shop"
         self.title = f"SHOP | {TITLE}"
+        self.checkout_page = CheckoutPage(page)
 
     @allure.step('Открыть страницу "Shop"')
     def open_shop_page(self):
@@ -165,3 +172,30 @@ class ShopPage(BasePage):
         checkout = self.page.locator(self.CHECKOUT_BUTTON)
         checkout.wait_for(state="visible", timeout=10000)
         checkout.click()
+
+    @allure.step('Открытие корзины')
+    def open_cart(self):
+        open_cart = self.page.locator(self.CART_BUTTON)
+        open_cart.click()
+
+    @allure.step('Проверка открытия пустой корзины')
+    def assert_empty_cart(self):
+        empty_cart_text = self.page.locator(self.EMPTY_CART_TEXT)
+        assert empty_cart_text.is_visible(), "Текст о пустой корзине не найден!"
+        continue_shopping_button = self.page.locator(
+            self.CONTINUE_SHOPPING_BUTTON)
+        assert continue_shopping_button.is_visible(
+        ), "Кнопка 'Продолжить покупки' не найдена!"
+
+    @allure.step('Проверка открытия корзины с товаром')
+    def assert_product_cart(self):
+        product_cart = self.page.locator(self.CART_ITEMS_SELECTOR)
+        product_cart.wait_for(state="visible", timeout=10000)
+        assert product_cart.is_visible(), "Товар в корзине не найден!"
+
+    def remove_item_from_cart(self):
+        dropdown = self.page.locator(self.DROPDOWN)
+        dropdown.click()
+
+        # Используем select_dropdown_option из CheckoutPage
+        self.checkout_page.select_dropdown_option(self.DROPDOWN, "Remove")

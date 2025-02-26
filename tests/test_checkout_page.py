@@ -1,14 +1,11 @@
 import allure
-import pytest
 from pages.checkout_page import CheckoutPage
 from pages.shop_page import ShopPage
 
 
-@pytest.mark.functional
-@allure.suite("Тест формы оплаты")
+@allure.epic("Тест формы оплаты")
 class TestCheckout:
 
-    @pytest.mark.smoke
     @allure.title("Test: Форма оплаты с заполнение данных из DB")
     def test_place_order(self, page, customers_db):
         shop_page = ShopPage(page)

@@ -100,3 +100,33 @@ class TestShopPage:
         shop_page.set_initial_quantity(3)
         shop_page.assert_initial_quantity(3)
         shop_page.assert_price_changes(77.97)
+
+    @allure.title("Test: проверка открытия пустой корзины")
+    def test_open_empty_cart(self, page):
+        shop_page = ShopPage(page)
+        shop_page.open_shop_page()
+        shop_page.assert_shop_page_is_opened()
+        shop_page.open_cart()
+        shop_page.assert_empty_cart()
+
+    @allure.title("Test: проверка открытия корзины с товаром")
+    def test_product_cart(self, page):
+        shop_page = ShopPage(page)
+        shop_page.open_shop_page()
+        shop_page.assert_shop_page_is_opened()
+        shop_page.select_metallic_filter()
+        shop_page.click_on_first_product()
+        shop_page.add_to_cart()
+        shop_page.assert_product_cart()
+
+    @allure.title("Test: проверка удаления товара из корзины")
+    def test_delete_product_cart(self, page):
+        shop_page = ShopPage(page)
+        shop_page.open_shop_page()
+        shop_page.assert_shop_page_is_opened()
+        shop_page.select_metallic_filter()
+        shop_page.click_on_first_product()
+        shop_page.add_to_cart()
+        shop_page.assert_product_cart()
+        shop_page.remove_item_from_cart()
+        shop_page.assert_empty_cart()
