@@ -1,6 +1,5 @@
 import allure
 import pytest
-
 from pages.shop_page import ShopPage
 from data.test_data import products
 

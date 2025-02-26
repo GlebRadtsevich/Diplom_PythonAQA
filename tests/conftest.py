@@ -11,8 +11,7 @@ def browser():
         browser = playwright.chromium.launch(headless=headless, args=[
             "--no-sandbox",
             "--disable-dev-shm-usage",
-            "--disable-gpu"
-        ])
+            "--disable-gpu"])
         yield browser
         browser.close()
 
