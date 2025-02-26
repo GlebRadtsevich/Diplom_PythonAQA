@@ -10,9 +10,7 @@ class CustomerDB:
     def connect(self):
         if self.connection is None:
             if not os.path.exists(self.db_path):
-                raise FileNotFoundError(
-                    f"Файл базы данных не найден: {
-                        self.db_path}")
+                raise FileNotFoundError(f"Файл базы данных не найден: {self.db_path}")
             self.connection = sqlite3.connect(self.db_path)
 
     def get_customer_from_db(self):
