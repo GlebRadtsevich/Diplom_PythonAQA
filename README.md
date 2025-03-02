@@ -78,7 +78,8 @@ phone       TEXT                          # Контактный номер кл
 ```bash
 python -m pytest
 
-HEADLESS=true python -m pytest # запуск в headless-режиме
+HEADLESS=true python -m pytest # Linux/macOS запуск в headless-режиме
+$env:headless="true"; python -m pytest # Windows запуск в headless-режиме
 ```
 
 ### Генерация отчетов Allure
